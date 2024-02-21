@@ -215,7 +215,7 @@ def resetImage():
     panel.configure(image=tk_img)
 
 
-# setting the theme/apperance
+# setting the theme /apperance
 customtkinter.set_appearance_mode("system")
 customtkinter.set_default_color_theme("dark-blue")
 
