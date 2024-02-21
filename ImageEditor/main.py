@@ -132,9 +132,7 @@ def reflictionD2BtoT():
         for x in range(width - y):
             pixel1 = getPixel(source, x, y)
             pixel2 = getPixel(source, width - y - 1, height - x - 1)
-
             color2 = getColor(pixel2)
-
             setColor(pixel1, color2)
 
     writePictureTo(source, "./newImage.png")
@@ -153,9 +151,7 @@ def reflictionD2TtoB():
         for x in range(width - y):
             pixel1 = getPixel(source, x, y)
             pixel2 = getPixel(source, width - y - 1, height - x - 1)
-
             color1 = getColor(pixel1)
-
             setColor(pixel2, color1)
 
     writePictureTo(source, "./newImage.png")
@@ -171,11 +167,10 @@ def rotateL():
     width = getWidth(source)
     height = getHeight(source)
     canvas = makeEmptyPicture(width * 1.5, height * 1.5)
-    for sourceX in range(0, getWidth(source)):
+    for sourceX in range(0, width):
         targetY = 0
-        for sourceY in range(0, getHeight(source)):
+        for sourceY in range(0, height):
             color = getColor(getPixel(source, sourceX, sourceY))
-            # Change is here
             setColor(getPixel(canvas, targetY, width - (sourceX - 1)), color)
             targetY = targetY + 1
         targetX = targetX + 1
