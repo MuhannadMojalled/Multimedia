@@ -89,8 +89,6 @@ def reflectionV():
 # Reflection D1 bottom to top
 def reflictionD1BtoT():
     global source
-    height = int(getHeight(source))
-    width = int(getWidth(source))
 
     for x in range(getWidth(source)):
         for y in range(x, getHeight(source)):
