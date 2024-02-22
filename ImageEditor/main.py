@@ -21,6 +21,8 @@ def open_img():
     source = makePicture(filename)
     panel.pack()
     button3.pack(pady=10)
+    button12.pack(pady=10)
+    button13.pack(pady=10)
     button4.pack(pady=10)
     button5.pack(pady=10)
     button6.pack(pady=10)
@@ -36,6 +38,8 @@ def remove_image():
     try:
         panel.pack_forget()
         button3.pack_forget()
+        button12.pack_forget()
+        button13.pack_forget()
         button4.pack_forget()
         button5.pack_forget()
         button6.pack_forget()
@@ -48,8 +52,27 @@ def remove_image():
         return
 
 
-# Horizontal Reflection
-def reflectionH():
+# Horizontal Bottom to Top Reflection
+def reflectionHBtoT():
+    global source
+    mirrorPoint = int(getHeight(source) / 2)
+    height = int(getHeight(source))
+
+    for x in range(0, getWidth(source)):
+        for y in range(0, mirrorPoint):
+            topPixel = getPixel(source, x, y)
+            bottomPixel = getPixel(source, x, height - y - 1)
+            color = getColor(bottomPixel)
+            setColor(topPixel, color)
+
+    writePictureTo(source, "./newImage.png")
+    imgN = Image.open("./newImage.png")
+    tk_img = customtkinter.CTkImage(imgN, size=(450, 450))
+    panel.configure(image=tk_img)
+
+
+# Horizontal Top to Bottom Reflection
+def reflectionHTtoB():
     global source
     mirrorPoint = int(getHeight(source) / 2)
     height = int(getHeight(source))
@@ -67,8 +90,27 @@ def reflectionH():
     panel.configure(image=tk_img)
 
 
-# Vertical Reflection
-def reflectionV():
+# Vertical Reflection Right to Left
+def reflectionVRtoL():
+    global source
+    mirrorPoint = int(getWidth(source) / 2)
+    width = getWidth(source)
+
+    for y in range(0, getHeight(source)):
+        for x in range(0, mirrorPoint):
+            leftPixel = getPixel(source, x, y)
+            rightPixel = getPixel(source, width - x - 1, y)
+            color = getColor(rightPixel)
+            setColor(leftPixel, color)
+
+    writePictureTo(source, "./newImage.png")
+    imgN = Image.open("./newImage.png")
+    tk_img = customtkinter.CTkImage(imgN, size=(450, 450))
+    panel.configure(image=tk_img)
+
+
+# Vertical Reflection Left to Right
+def reflectionVLtoR():
     global source
     mirrorPoint = int(getWidth(source) / 2)
     width = getWidth(source)
@@ -220,31 +262,31 @@ root.title("Image Editor")
 root.geometry("1000x850")
 
 # frame zero
-frame0 = customtkinter.CTkFrame(master=root, width=960, height=150)
+frame0 = customtkinter.CTkFrame(master=root, width=960, height=100)
 frame0.pack(pady=10, padx=10)
 frame0.pack_propagate(0)
 
 # frame one
-frame1 = customtkinter.CTkFrame(master=root, width=680, height=550)
+frame1 = customtkinter.CTkFrame(master=root, width=680, height=600)
 frame1.pack(side="left", anchor="ne", expand=True, pady=10, padx=10)
 frame1.pack_propagate(0)
 
 # frame two
-frame2 = customtkinter.CTkFrame(master=root, width=280, height=550)
+frame2 = customtkinter.CTkFrame(master=root, width=280, height=600)
 frame2.pack(side="right", anchor="nw", expand=True, pady=10, padx=10)
 frame2.pack_propagate(0)
 
 # title lable 0
 label = customtkinter.CTkLabel(frame0, text="Image Editor", font=("Arial", 25))
-label.pack(padx=30, pady=20)
+label.pack(padx=30, pady=10)
 
 # title lable 1
 label = customtkinter.CTkLabel(frame1, text="Image", font=("Arial", 25))
-label.pack(padx=30, pady=20)
+label.pack(padx=30, pady=10)
 
 # title lable 2
 label = customtkinter.CTkLabel(frame2, text="Controls", font=("Arial", 25))
-label.pack(padx=30, pady=20)
+label.pack(padx=30, pady=10)
 
 # image selectinng button
 button1 = customtkinter.CTkButton(frame0, text="select Image", command=open_img)
@@ -254,11 +296,25 @@ button1.pack(side="left", anchor="e", expand=True, pady=10, padx=10)
 button2 = customtkinter.CTkButton(frame0, text="Remove Image", command=remove_image)
 button2.pack(side="right", anchor="w", expand=True, pady=10)
 
-# Horizontal reflection button
-button3 = customtkinter.CTkButton(frame2, text="H Reflection", command=reflectionH)
+# Horizontal reflection Bottom to Top button
+button3 = customtkinter.CTkButton(
+    frame2, text="H Reflection B to T", command=reflectionHBtoT
+)
 
-# Vertical reflection button
-button4 = customtkinter.CTkButton(frame2, text="V Reflection", command=reflectionV)
+# Horizontal reflection Top to Bottom button
+button12 = customtkinter.CTkButton(
+    frame2, text="H Reflections T to B", command=reflectionHTtoB
+)
+
+# Vertical reflection Right to Left button
+button13 = customtkinter.CTkButton(
+    frame2, text="V Reflection L to R", command=reflectionVLtoR
+)
+
+# Vertical reflection Left to Right button
+button4 = customtkinter.CTkButton(
+    frame2, text="V Reflection R to L", command=reflectionVRtoL
+)
 
 # Diagonal D1 bottom to top refliction button
 button5 = customtkinter.CTkButton(
