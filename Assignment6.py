@@ -155,7 +155,7 @@ def maxFilter():
     panel.configure(image=tk_img)
 
 
-# Vertical Reflection Left to Right
+# meadian
 def medianFilter():
     global source
     height = int(getHeight(source))
@@ -186,6 +186,7 @@ def laplacianFilter():
     height = getHeight(source)
     width = getWidth(source)
     blank = makeEmptyPicture(width, height)
+    kernel = [[0, 1, 0], [1, -4, 1], [0, 1, 0]]
     for u in range(1, width - 1):
         for v in range(1, height - 1):
             sum = 0
@@ -195,7 +196,7 @@ def laplacianFilter():
                     intensity = (
                         getRed(p) + getBlue(p) + getGreen(p)
                     ) / 3  # Convert to grayscale
-                    sum += intensity
+                    sum += kernel[j + 1][i + 1] * intensity
             new_intensity = int(sum / 9)  # Average intensity
             color = makeColor(new_intensity, new_intensity, new_intensity)
             setColor(getPixel(blank, u, v), color)
