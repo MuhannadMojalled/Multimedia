@@ -187,19 +187,23 @@ def laplacianFilter():
     width = getWidth(source)
     blank = makeEmptyPicture(width, height)
     kernel = [[0, 1, 0], [1, -4, 1], [0, 1, 0]]
-    for u in range(1, width - 1):
-        for v in range(1, height - 1):
+    for x in range(1, width - 1):
+        for y in range(1, height - 1):
             sum = 0
-            for j in range(-1, 2):
-                for i in range(-1, 2):
-                    p = getPixel(source, u + i, v + j)
+            for j in range(-1, 1):
+                for i in range(-1, 1):
+                    p = getPixel(source, x + i, y + j)
                     intensity = (
                         getRed(p) + getBlue(p) + getGreen(p)
                     ) / 3  # Convert to grayscale
-                    sum += kernel[j + 1][i + 1] * intensity
-            new_intensity = int(sum / 9)  # Average intensity
+                sum += kernel[j + 1][i + 1] * intensity
+            if sum > 255:
+                sum = 255
+            elif sum < 0:
+                sum = 0
+            new_intensity = sum
             color = makeColor(new_intensity, new_intensity, new_intensity)
-            setColor(getPixel(blank, u, v), color)
+            setColor(getPixel(blank, x, y), color)
 
     writePictureTo(blank, "./newImage.png")
     imgN = Image.open("./newImage.png")
