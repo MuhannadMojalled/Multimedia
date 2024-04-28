@@ -152,3 +152,40 @@ blockingPlay(sound)
 # normalize(aSound)
 # blockingPlay(aSound)
 # merge()
+
+
+def combine_audio(audio_clip1, audio_clip2):
+
+    num_samples_clip1 = getNumSamples(audio_clip1)
+    print(num_samples_clip1)
+    num_samples_clip2 = getNumSamples(audio_clip2)
+    print(num_samples_clip2)
+
+    max_length = max(num_samples_clip1, num_samples_clip2)
+    combined_audio = makeEmptySound(max_length)
+
+    for sample_index in range(max_length):
+        if sample_index < num_samples_clip1 and sample_index < num_samples_clip2:
+            combined_sample_value = getSampleValueAt(
+                audio_clip1, sample_index
+            ) + getSampleValueAt(audio_clip2, sample_index)
+        if sample_index > num_samples_clip2 and sample_index < num_samples_clip1:
+            combined_sample_value = getSampleValueAt(audio_clip1, sample_index)
+        if sample_index < num_samples_clip2 and sample_index > num_samples_clip1:
+            combined_sample_value = getSampleValueAt(audio_clip2, sample_index)
+
+        setSampleValueAt(combined_audio, sample_index, combined_sample_value)
+
+    return combined_audio
+
+
+filepath1 = pickAFile()
+audio1 = makeSound(filepath1)
+filepath2 = pickAFile()
+audio2 = makeSound(filepath2)
+
+
+blockingPlay(audio1)
+blockingPlay(audio2)
+combined_sound = combine_audio(audio1, audio2)
+blockingPlay(combined_sound)
