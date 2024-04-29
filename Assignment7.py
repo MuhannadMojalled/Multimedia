@@ -13,7 +13,7 @@ def apply_maximum_filter(sound, window_size):
         start = max(0, i - window_size // 2)
         end = min(length - 1, i + window_size // 2)
 
-        # Apply maximum filter within the window
+        # Apply maximum filter within the selected window
         sounds = []
         for j in range(start, end + 1):
             sounds.append(getSampleValueAt(sound, j))
@@ -36,7 +36,8 @@ def apply_minimum_filter(sound, window_size):
         # Define the window range
         start = max(0, i - window_size // 2)
         end = min(length - 1, i + window_size // 2)
-        # Apply minimum filter within the window
+
+        # Apply minimum filter within the selected window
         sounds = []
         for j in range(start, end + 1):
             sounds.append(getSampleValueAt(sound, j))
