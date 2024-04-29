@@ -18,8 +18,7 @@ def apply_maximum_filter(sound, window_size):
         for j in range(start, end + 1):
             sounds.append(getSampleValueAt(sound, j))
         max_sample = max(sounds)
-        if i < 10:
-            print(max_sample)
+
         # Set the filtered sample value
         setSampleValueAt(filtered_sound, i, max_sample)
 
@@ -42,8 +41,6 @@ def apply_minimum_filter(sound, window_size):
         for j in range(start, end + 1):
             sounds.append(getSampleValueAt(sound, j))
         min_sample = min(sounds)
-        if i < 10:
-            print(min_sample)
 
         # Set the filtered sample value
         setSampleValueAt(filtered_sound, i, min_sample)
@@ -56,15 +53,13 @@ filename = pickAFile()
 sound = makeSound(filename)
 
 # Define the size of the maximum filter window
-window_size = 10  # Adjust as needed
+window_size = 3  # Adjust as needed
 
 # Apply maximum filter
-print("Max")
 filtered_sound_max = apply_maximum_filter(sound, window_size)
 # Play the sound
 blockingPlay(filtered_sound_max)
 
-print("Min")
 # Apply Minimum filter
 filtered_sound_min = apply_minimum_filter(sound, window_size)
 # Play the sound
